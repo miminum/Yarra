@@ -5,7 +5,7 @@ POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "lebron@cavs.com",
+  "email": "ghi@abc.com",
   "firstName": "Daniel",
   "lastName": "Huong",
   "password": "aaaaaa"
@@ -16,6 +16,6 @@ POST http://localhost:7000/auth
 Content-Type: application/json
 
 {
-  "email": "lebron@cavs.com",
+  "email": "daniel@abc.com",
   "password": "aaaaaa"
 }
