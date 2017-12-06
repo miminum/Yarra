@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   lastName: String,
 })
 
+// Enhance using the devise-like library to add email and password to the user model
 userSchema.plugin(passportLocalMongoose, {
   usernameField: 'email',
   usernameLowerCase: true, // Ensure that all emails are lowercase

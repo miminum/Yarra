@@ -8,7 +8,8 @@ server.use(bodyParser.json()) // Allows me to have JSPn uploads (POST/PUT/PATCH)
 
 // Routes
 server.use([
-  require('./routes/products')
+  require('./routes/products'),
+  require('./routes/auth')
 
 ])
 
