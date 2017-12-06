@@ -7,6 +7,10 @@ const server = express()
 server.use(bodyParser.json()) // Allows me to have JSPn uploads (POST/PUT/PATCH)
 
 // Routes
+server.use([
+  require('./routes/products')
+
+])
 
 // Start the server
 server.listen(7000, (error) => {
