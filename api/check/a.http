@@ -1,12 +1,21 @@
 GET http://localhost:7000/products
 
-###
+### Registration
 POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "daniel@abc.com",
+  "email": "lebron@cavs.com",
   "firstName": "Daniel",
   "lastName": "Huong",
+  "password": "aaaaaa"
+}
+
+### Sign in 
+POST http://localhost:7000/auth
+Content-Type: application/json
+
+{
+  "email": "lebron@cavs.com",
   "password": "aaaaaa"
 }
