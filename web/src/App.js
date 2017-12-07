@@ -6,33 +6,44 @@ import { listProducts } from './api/products'
 import { setToken } from './api/init'
 
 class App extends Component {
+  state = {
+    decodedToken: null
+  }
+  
   onSignIn = ({ email, password }) => {
     console.log('App received', { email, password })
     signIn({ email, password })
-      .then((data) => {
-        console.log('signed in', data)
-        const token = data.token
-        // Set the Authorization header in axios
-        setToken(token)
-        listProducts()
-        .then((products) => {
-          console.log(products)
+      .then((decodedToken) => {
+        console.log('signed in', decodedToken)
+        this.setState({ decodedToken })
         })
-        .catch((error) => {
-          console.log('error loading products', error)
-        })
+      .catch((error) => {
+        console.log('error loading products', error)
       })
-  }
+ }
   
   
   render() {
+    const { decodedToken } = this.state
+
     return (
       <div className="App">
         <h1>Yarra</h1>
         <h2 className="mb-3">Now Deliverying: Shipping trillions of new products</h2>
-        <SignInForm 
-          onSignIn={ this.onSignIn}
-        />
+        {
+          !!decodedToken ? (
+            <div>
+              <p>Email: {decodedToken.email}</p>
+              <p>Signed in at: { new Date(decodedToken.iat * 1000).toISOString() }</p>
+              <p>Expires at: { new Date(decodedToken.exp * 1000).toISOString() }</p>
+            </div>
+          ) : (
+            <SignInForm 
+              onSignIn={ this.onSignIn }
+            />
+          )
+        }
+        
       </div>
     );
   }
