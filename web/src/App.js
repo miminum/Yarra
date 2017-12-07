@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import './App.css';
 import SignInForm from './components/SignInForm'
 import SignUpForm from './components/SignUpForm'
-import { Product } from './components/Product' 
+import { Product } from './components/Product'
+import { CreateProductForm } from './components/CreateProductForm'
 import { signIn, signOutNow, signUp } from './api/auth'
-import { listProducts } from './api/products'
+import { listProducts, createProduct } from './api/products'
 import { getDecodedToken } from './api/token'
 
 class App extends Component {
@@ -69,6 +70,20 @@ class App extends Component {
     const currentSignUpForm = this.state.displaySignUpForm
     this.setState({ displaySignUpForm: !currentSignUpForm })
   }
+
+  onCreateProduct = ({ name, brandName }) => {
+    createProduct({ name, brandName })
+      .then((createdProduct) => {
+        listProducts()
+        .then((products) => {
+          this.setState({ products: products })
+          console.log(this.state.products)
+        })
+      })
+      .catch((error) => {
+        console.log('error loading products', error)
+      })
+  }
   
   render() {
     const { decodedToken, signUpToken, displaySignUpForm, products } = this.state
@@ -89,6 +104,9 @@ class App extends Component {
               <p>Expires at: { new Date(decodedToken.exp * 1000).toISOString() }</p>
               <Product
                 products= { products }
+              />
+              <CreateProductForm 
+                onCreateProduct={ this.onCreateProduct }
               />
               <button
                 onClick = { this.onSignOut }
