@@ -13,3 +13,10 @@ export function signIn({email, password}) {
 export function signOutNow() {
   setToken(null)
 }
+
+export function signUp({ email, firstName, lastName, password }) {
+  return api.post('/auth/register', { email, firstName, lastName, password })
+    .then((res) => {
+      return res.data.token
+    })
+}

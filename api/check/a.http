@@ -6,7 +6,7 @@ POST http://localhost:7000/auth/register
 Content-Type: application/json
 
 {
-  "email": "ghi@abc.com",
+  "email": "ghi@bcd.net",
   "firstName": "Daniel",
   "lastName": "Huong",
   "password": "aaaaaa"
@@ -19,4 +19,12 @@ Content-Type: application/json
 {
   "email": "daniel@abc.com",
   "password": "aaaaaa"
+}
+###
+POST http://localhost:7000/products
+Content-Type: application/json
+
+{
+  "name": "Regular Boots",
+  "brandName": "32"
 }
