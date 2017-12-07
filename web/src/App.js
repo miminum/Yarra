@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
 import SignInForm from './components/SignInForm'
-import { signIn } from './api/auth'
+import { signIn, signOutNow } from './api/auth'
 import { listProducts } from './api/products'
-import { setToken } from './api/init'
+import { getDecodedToken } from './api/token'
 
 class App extends Component {
   state = {
-    decodedToken: null
+    decodedToken: getDecodedToken() // Restore the previous signed in data
   }
   
   onSignIn = ({ email, password }) => {
@@ -22,21 +22,32 @@ class App extends Component {
       })
  }
   
+  onSignOut = () => {
+    signOutNow()
+    this.setState({ decodedToken: null })
+  }
   
   render() {
     const { decodedToken } = this.state
+    const signedIn = !!decodedToken
 
     return (
       <div className="App">
         <h1>Yarra</h1>
         <h2 className="mb-3">Now Deliverying: Shipping trillions of new products</h2>
         {
-          !!decodedToken ? (
+          signedIn ? (
             <div>
               <p>Email: {decodedToken.email}</p>
               <p>Signed in at: { new Date(decodedToken.iat * 1000).toISOString() }</p>
               <p>Expires at: { new Date(decodedToken.exp * 1000).toISOString() }</p>
+              <button
+                onClick = { this.onSignOut }
+              >
+                Sign out
+              </button>
             </div>
+            
           ) : (
             <SignInForm 
               onSignIn={ this.onSignIn }
