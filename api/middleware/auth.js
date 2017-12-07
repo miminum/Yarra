@@ -34,9 +34,30 @@ passport.use(new PassportJwt.Strategy({
   // Where will the JWT be passed in the HTTP request?
   // e.g. Authorization: Bearer eyJhbGc...
   jwtFromRequest: PassportJwt.ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrkey: jwtSecret,
+  // What is the secret? 
+  secretOrKey: jwtSecret,
+  // What algorithm(s) was used to sign it?
   algorithms: [jwtAlgorithm] 
-}))
+},
+  // When we have a verified token
+  (payload, done) => {
+    User.findById(payload.sub)
+      .then((user) => {
+        // If user was found with this id
+        if (user) {
+          done(null, user)
+        }
+        // If no user was found
+        else {
+          done(null, false)
+        }
+      })
+      .catch((error) => {
+        // If there was a failure
+         done(error, false)
+      })
+  }
+))
 
 function signJWTForUser(req, res) {
   // Get he user either just signed in on signed up
@@ -63,5 +84,6 @@ module.exports = {
   initialize: passport.initialize(),
   register,
   signIn: passport.authenticate('local', { session: false }),
+  requireJWT: passport.authenticate('jwt', { session: false }),
   signJWTForUser
 }

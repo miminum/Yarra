@@ -1,4 +1,5 @@
 GET http://localhost:7000/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRhbmllbEBhYmMuY29tIiwiaWF0IjoxNTEyNTM0OTk1LCJleHAiOjE1MTMxMzk3OTUsInN1YiI6IjVhMjc1MWM3NDY5NDQzMzhhODZhZDM3YiJ9.KQSlKVxeTjNmFySgEDUxP7L1yAudf1wOpleQv0uKl1o
 
 ### Registration
 POST http://localhost:7000/auth/register
